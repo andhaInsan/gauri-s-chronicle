@@ -3,18 +3,18 @@ import { AnimatePresence } from "framer-motion";
 import CatBirthdaySection from "@/components/CatBirthdaySection";
 import MonkeyMemeSection from "@/components/MonkeyMemeSection";
 import VersionsSection from "@/components/VersionsSection";
-import VideoCallsSection from "@/components/VideoCallsSection";
 import UpsDownsSection from "@/components/UpsDownsSection";
 import GrowthSection from "@/components/GrowthSection";
+import PhotoCollageSection from "@/components/PhotoCollageSection";
 import BirthdayGiftSection from "@/components/BirthdayGiftSection";
 
 const sections = [
   "cat",
   "monkey",
   "versions",
-  "videocalls",
   "upsdowns",
   "growth",
+  "collage",
   "birthday",
 ] as const;
 
@@ -28,6 +28,9 @@ const Index = () => {
     setCurrentSection(section);
   };
 
+  const currentIdx = sections.indexOf(currentSection);
+  const prev = currentIdx > 0 ? sections[currentIdx - 1] : undefined;
+
   return (
     <div className="min-h-screen bg-background">
       <AnimatePresence mode="wait">
@@ -35,21 +38,23 @@ const Index = () => {
           <CatBirthdaySection key="cat" onComplete={() => goTo("monkey")} />
         )}
         {currentSection === "monkey" && (
-          <MonkeyMemeSection key="monkey" onComplete={() => goTo("versions")} />
+          <MonkeyMemeSection key="monkey" onComplete={() => goTo("versions")} onBack={() => goTo("cat")} />
         )}
         {currentSection === "versions" && (
-          <VersionsSection key="versions" onComplete={() => goTo("videocalls")} />
-        )}
-        {currentSection === "videocalls" && (
-          <VideoCallsSection key="videocalls" onComplete={() => goTo("upsdowns")} />
+          <VersionsSection key="versions" onComplete={() => goTo("upsdowns")} onBack={() => goTo("monkey")} />
         )}
         {currentSection === "upsdowns" && (
-          <UpsDownsSection key="upsdowns" onComplete={() => goTo("growth")} />
+          <UpsDownsSection key="upsdowns" onComplete={() => goTo("growth")} onBack={() => goTo("versions")} />
         )}
         {currentSection === "growth" && (
-          <GrowthSection key="growth" onComplete={() => goTo("birthday")} />
+          <GrowthSection key="growth" onComplete={() => goTo("collage")} onBack={() => goTo("upsdowns")} />
         )}
-        {currentSection === "birthday" && <BirthdayGiftSection key="birthday" />}
+        {currentSection === "collage" && (
+          <PhotoCollageSection key="collage" onComplete={() => goTo("birthday")} onBack={() => goTo("growth")} />
+        )}
+        {currentSection === "birthday" && (
+          <BirthdayGiftSection key="birthday" onBack={() => goTo("collage")} />
+        )}
       </AnimatePresence>
     </div>
   );

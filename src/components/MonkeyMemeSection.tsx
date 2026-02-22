@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import SectionNav from "./SectionNav";
+import BirthdayDecorations from "./BirthdayDecorations";
 
 interface Props {
   onComplete: () => void;
+  onBack?: () => void;
 }
 
-const MonkeyMemeSection = ({ onComplete }: Props) => {
+const MonkeyMemeSection = ({ onComplete, onBack }: Props) => {
   const [showOverlay, setShowOverlay] = useState(false);
 
   return (
@@ -14,10 +17,11 @@ const MonkeyMemeSection = ({ onComplete }: Props) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, y: -40 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
+      className="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden"
     >
-      <div className="w-full max-w-lg mx-auto">
-        <div className="aspect-video rounded-lg overflow-hidden bg-secondary mb-8">
+      <BirthdayDecorations />
+      <div className="w-full max-w-lg mx-auto relative z-10">
+        <div className="aspect-video rounded-lg overflow-hidden bg-secondary mb-8 shadow-md">
           <iframe
             className="w-full h-full"
             src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
@@ -51,22 +55,15 @@ const MonkeyMemeSection = ({ onComplete }: Props) => {
                 <p className="font-heading text-xl md:text-2xl text-foreground mb-4">
                   She's still here.
                 </p>
-                <p className="text-muted-foreground font-body text-sm mb-10">
+                <p className="text-muted-foreground font-body text-sm mb-6">
                   For some reason.
                 </p>
-                <motion.button
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.2 }}
-                  onClick={onComplete}
-                  className="px-8 py-3 bg-primary text-primary-foreground font-body font-medium rounded-lg hover:opacity-90 transition-opacity"
-                >
-                  Continue
-                </motion.button>
               </motion.div>
             </AnimatePresence>
           )}
         </div>
+
+        <SectionNav onBack={onBack} onNext={onComplete} />
       </div>
     </motion.section>
   );
