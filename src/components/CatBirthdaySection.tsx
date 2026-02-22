@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import BirthdayDecorations from "./BirthdayDecorations";
 
 interface Props {
   onComplete: () => void;
@@ -14,10 +15,11 @@ const CatBirthdaySection = ({ onComplete }: Props) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, y: -40 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
+      className="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden"
     >
-      <div className="w-full max-w-lg mx-auto">
-        <div className="aspect-video rounded-lg overflow-hidden bg-secondary mb-8">
+      <BirthdayDecorations />
+      <div className="w-full max-w-lg mx-auto relative z-10">
+        <div className="aspect-video rounded-lg overflow-hidden bg-secondary mb-8 shadow-md">
           <iframe
             className="w-full h-full"
             src="https://www.youtube.com/embed/bMCMblbzWnE?rel=0"
@@ -43,13 +45,13 @@ const CatBirthdaySection = ({ onComplete }: Props) => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="text-center"
+              className="flex justify-center"
             >
               <button
                 onClick={onComplete}
-                className="px-8 py-3 bg-primary text-primary-foreground font-body font-medium rounded-lg hover:opacity-90 transition-opacity"
+                className="flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-body font-medium rounded-full hover:opacity-90 transition-opacity"
               >
-                Now the real one.
+                Now the real one. →
               </button>
             </motion.div>
           )}
